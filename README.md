@@ -10,7 +10,44 @@ API for shortening URLs.
 - **Docker** and **Docker Compose**
 - **NPM**
 
----
+## ⚙️ Initial Setup
+
+```bash
+cp .env.example .env
+```
+
+## 🚀 Running the Application
+
+#### 🐳 Option 1 - docker-compose
+
+Starts the API and the Database automatically.
+
+```bash
+# Builds the image and starts the containers in the background
+docker-compose up --build -d
+
+# Follow the API logs
+docker-compose logs -f api
+```
+
+#### 🖥️ Option 2 - local
+
+```bash
+# Start the database
+docker-compose up db -d
+
+# Install dependencies
+npm install
+
+# Run migrations
+npm run prisma:migrate:dev
+
+# Generate Prisma clients
+npm run prisma:generate
+
+# Start in watch mode
+npm run start:dev
+```
 
 ## 📖 Development Utilities
 
