@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common'
 import { customAlphabet } from 'nanoid'
 
-import { CreateShortUrlDto, CreateShortUrlResponse } from '@app/modules/shorten/dto'
-import { ShortUrlRepository } from '@app/modules/shorten/repositories/short-url.repository'
+import { CreateShortUrlDto, ShortUrlResponse } from '@app/modules/shorten/dto'
+import {
+  ShortUrlRepository,
+  shortUrlStandardSelect,
+} from '@app/modules/shorten/repositories/short-url.repository'
 
 const nanoid = customAlphabet(
   '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
@@ -18,10 +21,10 @@ const nanoid = customAlphabet(
 export class CreateShortUrlUseCase {
   constructor(private readonly shortUrlRepo: ShortUrlRepository) {}
 
-  async execute(dto: CreateShortUrlDto): Promise<CreateShortUrlResponse> {
+  async execute(dto: CreateShortUrlDto): Promise<ShortUrlResponse> {
     return this.shortUrlRepo.model.create({
       data: { ...dto, shortCode: nanoid() },
-      select: { id: true, url: true, shortCode: true, createdAt: true, updatedAt: true },
+      select: shortUrlStandardSelect,
     })
   }
 }
