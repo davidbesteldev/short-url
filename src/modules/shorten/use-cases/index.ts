@@ -1,3 +1,5 @@
 export * from './create-short-url.use-case'
 export * from './get-short-url.use-case'
 export * from './get-short-url-stats.use-case'
+export * from './update-short-url.use-case'
+export * from './delete-short-url.use-case'

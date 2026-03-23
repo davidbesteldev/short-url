@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common'
 import { ApiOperation } from '@nestjs/swagger'
 
-import { CreateShortUrlDto } from '@app/modules/shorten/dto'
+import { CreateShortUrlDto, UpdateShortUrlDto } from '@app/modules/shorten/dto'
 import { ShortenService } from '@app/modules/shorten/shorten.service'
 
 @Controller('shorten')
@@ -30,5 +30,18 @@ export class ShortenController {
   })
   getStats(@Param('shortCode') shortCode: string) {
     return this.shortenService.getStats(shortCode)
+  }
+
+  @Put('/:shortCode')
+  @ApiOperation({ summary: 'Update short URL' })
+  update(@Param('shortCode') shortCode: string, @Body() body: UpdateShortUrlDto) {
+    return this.shortenService.update(shortCode, body)
+  }
+
+  @Delete('/:shortCode')
+  @HttpCode(204)
+  @ApiOperation({ summary: 'Delete short URL' })
+  delete(@Param('shortCode') shortCode: string) {
+    return this.shortenService.delete(shortCode)
   }
 }
